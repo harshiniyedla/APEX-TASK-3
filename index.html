@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Styling and JavaScript</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: #fff;
+      text-align: center;
+    }
+
+    header {
+      padding: 40px 20px 20px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    section {
+      background: rgba(255, 255, 255, 0.1);
+      margin: 30px auto;
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 600px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      color: #fcd34d;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #fcd34d;
+      border: none;
+      color: #000;
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #fde68a;
+    }
+
+    #joke {
+      margin-top: 15px;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.8em;
+      }
+
+      section {
+        margin: 20px 10px;
+        padding: 20px;
+      }
+
+      button {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌟 Advanced Styling and JavaScript Demo</h1>
+    <p>This interactive page uses responsive design, a quiz, and real-time API data!</p>
+  </header>
+
+  <!-- Quiz Section -->
+  <section>
+    <h2>🧠 Quick Quiz</h2>
+    <p id="question"></p>
+    <div>
+      <button onclick="checkAnswer('A')">A</button>
+      <button onclick="checkAnswer('B')">B</button>
+    </div>
+  </section>
+
+  <!-- API Section -->
+  <section>
+    <h2>😂 Random Joke Generator</h2>
+    <button onclick="getJoke()">Get a Joke</button>
+    <p id="joke"></p>
+  </section>
+
+  <script>
+    // Quiz Data
+    const quizData = {
+      question: "Which language runs in a web browser?",
+      correct: "A",
+      options: {
+        A: "JavaScript",
+        B: "Python"
+      }
+    };
+
+    // Set Question
+    document.getElementById("question").innerText = 
+      `${quizData.question}\n\nA: ${quizData.options.A}   |   B: ${quizData.options.B}`;
+
+    // Check Answer Function
+    function checkAnswer(choice) {
+      if (choice === quizData.correct) {
+        alert("✅ Correct!");
+      } else {
+        alert("❌ Wrong. Try again!");
+      }
+    }
+
+    // Fetch Joke from API
+    function getJoke() {
+      fetch("https://official-joke-api.appspot.com/random_joke")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("joke").innerText = `${data.setup} - ${data.punchline}`;
+        })
+        .catch(err => {
+          console.error("Joke fetch error:", err);
+          document.getElementById("joke").innerText = "Failed to load a joke.";
+        });
+    }
+  </script>
+
+</body>
+</html>
